@@ -1,0 +1,13 @@
+name = "PlutoLaTeXPDF"
+uuid = "aa69a646-8e70-45a0-bf46-6deacfc904de"
+authors = ["Ben Lauwens <ben.lauwens@gmail.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
