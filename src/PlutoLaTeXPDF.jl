@@ -2,7 +2,6 @@ module PlutoLaTeXPDF
 
 using Markdown
 using Pluto: ServerSession, SessionActions, can_show_logs
-using Tectonic
 
 export tolatex, latextoPDF, toPDF
 
