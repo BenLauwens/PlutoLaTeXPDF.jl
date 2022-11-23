@@ -1,0 +1,129 @@
+\documentclass[11pt]{scrbook}
+
+%packages
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage[a4paper]{geometry}
+\usepackage[svgnames]{xcolor}
+\usepackage{svg}
+\usepackage{awesomebox}
+\usepackage{minted}
+\usepackage{mathtools}
+\usepackage{polyglossia}
+\usepackage{graphicx}
+\usepackage{scrlayer-scrpage}
+\usepackage{newunicodechar}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false]
+ {hyperref}
+
+%configs
+\geometry{verbose, tmargin=2cm, bmargin=2.5cm, lmargin=2.5cm, rmargin=2.5cm, footskip=1cm}
+\svgsetup{inkscapeexe=/usr/local/bin/inkscape, inkscape=force, inkscapelatex=false}
+\setminted{samepage=true, breaklines=true}
+\mathtoolsset{showonlyrefs}
+\setdefaultlanguage[variant=american]{english}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\hypersetup{pdftitle={TITLE}, pdfauthor={AUTHOR}}
+
+%fonts
+\unimathsetup{math-style=ISO,bold-style=ISO,partial=upright}
+\setmainfont{Minion Pro}
+\setsansfont[BoldFont = {Myriad Pro Semibold Condensed}]{Myriad Pro Condensed}
+\setmonofont[Scale=MatchLowercase]{JuliaMono}
+\setmathfont{Minion Math}
+\setmathfont{Minion Math Bold}[range={bfup->up,bfit->it}]
+\setmathsf{Myriad Pro}
+\setkomafont{pageheadfoot}{\sffamily\bfseries\footnotesize}
+\setkomafont{pagenumber}{\sffamily\bfseries\footnotesize}
+\setkomafont{section}{\LARGE}
+\setkomafont{subsection}{\Large}
+\newfontfamily{\emoji}{Twitter Color Emoji}
+\newunicodechar{🐢}{\mbox{\emoji🐢}}
+\newunicodechar{🐫}{\mbox{\emoji🐫}}
+\newunicodechar{🍎}{\mbox{\emoji🍎}}
+\newunicodechar{🍐}{\mbox{\emoji🍐}}
+\newunicodechar{🍌}{\mbox{\emoji🍌}}
+
+%ligatures
+\makeatletter
+\def\verbatim@nolig@list{}%
+\makeatother
+
+%chapterstyle
+\renewcommand*{\raggedchapter}{\raggedleft}
+\renewcommand*{\chapterformat}{%
+\mbox{\chapappifchapterprefix{\nobreakspace}\thechapter}}
+\renewcommand{\chapterlinesformat}[3]{%
+	\ifstr{#2}{}{
+		\vskip 2cm
+	}{
+		\parbox{\textwidth}{%
+			\raggedchapter
+			\LARGE\MakeUppercase{\chapapp}\nobreakspace#2%
+		}%
+	}
+	\vspace{-0.8cm}
+	\hrule
+	\vspace{0.1cm}
+	\parbox{\textwidth}{%
+		\raggedchapter
+		{\Huge\selectfont #3}%
+	}%
+}
+\renewcommand*{\chapterheadendvskip}{\vspace{4cm}}
+\renewcommand*{\chapterheadstartvskip}{\vspace{1cm}}
+
+%heading/footer
+\KOMAoptions{footsepline=true,plainfootsepline=true}
+\ihead[]{}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{}
+\cfoot[]{}
+\rofoot[\pagemark]{\headmark\hspace{0.4cm}|\hspace{0.4cm}\pagemark}
+\lefoot[\pagemark]{\pagemark\hspace{0.4cm}|\hspace{0.4cm}
+	\if@mainmatter
+		\chapapp\nobreakspace
+	\fi
+\headmark}
+\pagestyle{scrheadings}
+\automark[section]{chapter}
+
+%toc
+\KOMAoptions{chapterentrydots=true}
+\DeclareTOCStyleEntry[linefill=\hfill]{tocline}{section}
+\renewcommand*{\addparttocentry}[2]{%
+  \addtocentrydefault{part}{}{#2}%
+}
+\addtokomafont{partentrypagenumber}{\nullfont}
+\addtokomafont{chapterentry}{\large}
+\addtokomafont{partentry}{\Large}
+
+%figures
+\KOMAoptions{captions=nooneline}
+\setkomafont{caption}{\itshape}
+\setkomafont{captionlabel}{\itshape}
+\renewcommand*{\captionformat}{\ }
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\setlength\abovecaptionskip{-3pt}
+
+%opening
+\title{TITLE}
+\author{AUTHOR}
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents{}
+
+\mainmatter{}
+
+CONTENT
+
+\backmatter{}
+
+\end{document}

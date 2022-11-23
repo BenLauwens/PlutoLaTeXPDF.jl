@@ -1,0 +1,54 @@
+\documentclass[11pt]{scrbook}
+
+%packages
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage[a4paper]{geometry}
+\usepackage[svgnames]{xcolor}
+\usepackage{svg}
+\usepackage{awesomebox}
+\usepackage{minted}
+\usepackage{mathtools}
+\usepackage{polyglossia}
+\usepackage{libertinus}
+\usepackage[condensed]{cabin}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false]
+ {hyperref}
+
+%configs
+geometry{verbose, tmargin=2cm, bmargin=2.5cm, lmargin=2.5cm, rmargin=2.5cm, footskip=1cm}
+\svgsetup{inkscapeexe=/usr/local/bin/inkscape, inkscape=force, inkscapelatex=false}
+\setminted{samepage=true, breaklines=true}
+\mathtoolsset{showonlyrefs}
+\setdefaultlanguage[variant=american]{english}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+
+%fonts
+\unimathsetup{math-style=ISO,bold-style=ISO,partial=upright}
+\setmonofont[Scale=MatchLowercase]{JuliaMono}
+
+%ligatures
+\makeatletter
+\def\verbatim@nolig@list{}%
+\makeatother
+
+%opening
+\title{TITLE}
+\author{AUTHOR}
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents{}
+
+\mainmatter{}
+
+CONTENT
+
+\backmatter{}
+
+\end{document}

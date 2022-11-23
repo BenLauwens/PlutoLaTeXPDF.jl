@@ -3,6 +3,11 @@ uuid = "aa69a646-8e70-45a0-bf46-6deacfc904de"
 authors = ["Ben Lauwens <ben.lauwens@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
+Tectonic = "9ac5f52a-99c6-489f-af81-462ef484790f"
+
 [compat]
 julia = "1"
 
