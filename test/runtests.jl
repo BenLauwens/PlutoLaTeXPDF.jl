@@ -5,10 +5,10 @@ using Test
     PlutoLaTeXPDF.ADMONITIONTYPES["languages"] = ("awesomeblock", raw"[ForestGreen]{2pt}{\faCode}{ForestGreen}")
     dir = joinpath(@__DIR__, "..", "example")
     file = joinpath(@__DIR__, "notebooks", "test_1.jl")
-    file = joinpath(homedir(), "GitHub", "ES123", "Lectures", "Lecture05.jl")
+    file = joinpath(homedir(), "GitHub", "ES123", "Lectures", "Lecture06.jl")
     #toPDF(dir, file; author="Ben Lauwens")
     files = String[]
-    for i in 1:5
+    for i in 1:6
         push!(files, joinpath(homedir(), "GitHub", "ES123", "Lectures", "Lecture0$i.jl"))
     end
     ##=
