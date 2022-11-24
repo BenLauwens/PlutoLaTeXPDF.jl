@@ -347,9 +347,10 @@ end
 function latextoPDF(file::String)
     dir, name = splitdir(file)
     cd(dir)
-    run(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    run(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    run(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    for i in 1:3
+        @info "LaTeX run $i"
+        success(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    end
 end
 
 function tolatex(dir::String, file::String)
@@ -378,9 +379,10 @@ function toPDF(dir::String, file::String; author::String="")
                                  "AUTHOR" => author,
                                  "CONTENT" => content)
     write(joinpath(dir, name), document)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    for i in 1:3
+        @info "LaTeX run $i"
+        success(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    end
 end
 
 function toPDF(path::String, files::Vector{String};
@@ -393,7 +395,7 @@ function toPDF(path::String, files::Vector{String};
     io = IOBuffer()
     for file in files
         name, _ = splitext(basename(file))
-        @info name
+        @info "Convert " * name
         println(io, raw"\include{" * name *"}")
         content = _tolatex(file)
         write(joinpath(dir, name * ".tex"), content)
@@ -402,12 +404,12 @@ function toPDF(path::String, files::Vector{String};
                                                "AUTHOR" => author,
                                                "CONTENT" => String(take!(io)))
     name, _ = splitext(basename(path))
-    @info name
     name = name * ".tex"
     write(joinpath(dir, name), document)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
-    success(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    for i in 1:3
+        @info "LaTeX run $i"
+        success(`xelatex -interaction=nonstopmode -shell-escape $name`)
+    end
 end
 
 end
