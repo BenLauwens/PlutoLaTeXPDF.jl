@@ -165,6 +165,24 @@ md"""## Lists
 3. c = d 
 """
 
+# ╔═╡ 5e011c7c-5428-40ac-9ed8-535457894deb
+md"""
+| Column Zero | *Column One* | `Column Two` | **Column Three** |
+| ----------- |:---------- | ----------:|:------------:|
+| Row ``1``   | Row `1`    | Column `2` |              |
+|             | *Row* 2    | **Row** 2  | Column ``3`` |
+"""
+
+# ╔═╡ e5769d0b-ca63-45d4-b97a-172a58131db9
+let
+	md"""
+| Column Zero | *Column One* | `Column Two` | **Column Three** |
+| ----------- |:---------- | ----------:|:------------:|
+| Row ``1``   | Row `1`    | Column `2` |              |
+|             | *Row* 2    | **Row** 2  | Column ``3`` |
+"""
+end
+
 # ╔═╡ Cell order:
 # ╟─db7cb529-b5c3-42ef-a245-e688a25c8bda
 # ╟─48e21c30-6985-11ed-1d70-95ccaf4a4e55
@@ -183,3 +201,5 @@ md"""## Lists
 # ╟─2fb3f97d-4a89-4395-91ad-b57e27fe8fc8
 # ╟─8039edb1-d37c-4761-900f-96b8a562713a
 # ╟─912cdd0f-ef6a-4800-a3df-6f1bf4ee3c73
+# ╠═5e011c7c-5428-40ac-9ed8-535457894deb
+# ╟─e5769d0b-ca63-45d4-b97a-172a58131db9

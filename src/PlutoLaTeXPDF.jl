@@ -133,6 +133,29 @@ function _tolatex(io::IOBuffer, footnote::Markdown.Footnote)
     println(io, "}")
 end
 
+function _tolatex(io::IOBuffer, table::Markdown.Table)
+    rows = table.rows
+    len_row = length(rows)
+    println(io, raw"\begin{center}")
+    println(io, raw"\begin{tabular}{", reduce(*, map(string, table.align)),"}")
+    println(io, raw"\hline")
+    for (nr_row, columns) in enumerate(rows)
+        len_col = length(columns)
+        for (nr_col, cell) in enumerate(columns)
+            _inline_tolatex(io, cell)
+            if nr_col == len_col && nr_row != len_row
+                print(io, " \\\\")
+            else
+                print(io, " & ")
+            end
+        end
+        println(io)
+    end
+    println(io, raw"\hline")
+    println(io, raw"\end{tabular}")
+    println(io, raw"\end{center}")
+end
+
 const ADMONITIONTYPES = Dict{String, Tuple{String, String}}(
     "danger" => ("cautionblock", ""),
     "warning" => ("warningblock", ""),
