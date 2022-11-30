@@ -1,4 +1,4 @@
-\documentclass{scrbook}
+\documentclass[12pt]{scrbook}
 
 %packages
 \usepackage{fontspec}
@@ -13,19 +13,19 @@
 \usepackage{graphicx}
 \usepackage{scrlayer-scrpage}
 \usepackage{newunicodechar}
-\usepackage[unicode=true, bookmarks=true, bookmarksnumbered=false, bookmarksopen=false,
-breaklinks=false, pdfborder={0 0 0}, pdfborderstyle={}, backref=false, colorlinks=false]
-{hyperref}
+\usepackage{hyperref}
 
 %configs
-\geometry{verbose, tmargin=2cm, bmargin=2.5cm, lmargin=2.5cm, rmargin=2.5cm, footskip=1cm}
+\geometry{verbose, vscale=0.8, hscale=0.75, footskip=1cm}
 \svgsetup{inkscapeexe=/usr/local/bin/inkscape, inkscape=force, inkscapelatex=false}
 \setminted{samepage=true, breaklines=true, fontsize=\small}
 \mathtoolsset{showonlyrefs}
 \setdefaultlanguage[variant=american]{english}
 \setlength{\parskip}{\smallskipamount}
 \setlength{\parindent}{0pt}
-\hypersetup{pdftitle={TITLE}, pdfauthor={AUTHOR}}
+\hypersetup{pdftitle={TITLE}, pdfauthor={AUTHOR}, unicode=true, bookmarks=true, 
+bookmarksnumbered=false, bookmarksopen=false, breaklinks=false, pdfborder={0 0 0}, 
+pdfborderstyle={}, backref=false, colorlinks=false}
 
 %fonts
 \unimathsetup{math-style=ISO,bold-style=ISO,partial=upright}
