@@ -302,9 +302,10 @@ function _tolatex(file::String)
             end
         elseif output.mime == MIME("text/plain")
             if output.body != ""
-            println(io, raw"\begin{minted}{text}")
-            println(io, output.body)
-            println(io, raw"\end{minted}")
+                println(io, raw"\needspace{2\baselineskip}")
+                println(io, raw"\begin{minted}{text}")
+                println(io, output.body)
+                println(io, raw"\end{minted}")
             end
         elseif output.mime == MIME("application/vnd.pluto.tree+object")
             println(io, raw"\begin{minted}{text}")
