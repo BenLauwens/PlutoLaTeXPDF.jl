@@ -16,7 +16,9 @@ function _inline_tolatex(io::IOBuffer, txt::String)
                        '^' => raw"\^{}",
                        '%' => raw"\%",
                        '#' => raw"\#",
-                       '\\' => raw"\textbackslash ")
+                       '\\' => raw"\textbackslash ",
+                       '$' => raw"\$"
+                       )
     print(io, txt)
 end
 
@@ -188,6 +190,10 @@ end
 
 function _outputtolatex(io::IOBuffer, arr::Vector)
     for (nr, element) in enumerate(arr)
+        if nr > 10
+            print(io, ", ...")
+            break
+        end
         if nr != 1 && element isa Tuple
             print(io, ", ")
         end
@@ -216,6 +222,13 @@ function _outputtolatex(io::IOBuffer, element::Tuple{Tuple{String, MIME{Symbol("
     print(io, key, " => ", value)
 end
 
+function _outputtolatex(io::IOBuffer, element::Tuple{Tuple{String, MIME{Symbol("text/plain")}}, Tuple{Dict{Symbol, Any}, MIME{Symbol("application/vnd.pluto.tree+object")}}})
+    key = element[1][1]
+    value = element[2][1]
+    print(io, key, " => ")
+    _outputtolatex(io, element[2][1])
+end
+
 function _outputtolatex(io::IOBuffer, parent::Dict{Symbol, Any})
     type = get(parent, :type, :nothing)
     if type == :Tuple
@@ -223,6 +236,10 @@ function _outputtolatex(io::IOBuffer, parent::Dict{Symbol, Any})
         _outputtolatex(io, parent[:elements])
         print(io, ")")
     elseif type == :Array
+        print(io, parent[:prefix], "[")
+        _outputtolatex(io, parent[:elements])
+        print(io, "]")
+    elseif type == :Set
         print(io, parent[:prefix], "[")
         _outputtolatex(io, parent[:elements])
         print(io, "]")
@@ -317,6 +334,17 @@ function _tolatex(file::String)
             _outputtolatex(io, output.body)
             println(io, raw"\end{minted}")
             println(io, raw"\color{black}")
+        elseif output.mime == MIME("text/html")
+            if occursin("Version", output.body)
+                io_banner = IOBuffer()
+                Base.banner(io_banner)
+                banner = String(take!(io_banner))
+                println(io, raw"\begin{minted}[frame=single]{jlcon}")
+                println(io, banner * "julia>")
+                println(io, raw"\end{minted}")
+            else
+                dump(output)
+            end
         else
             dump(output)
         end
@@ -330,8 +358,8 @@ function _tolatex(file::String)
                 logtype = get(LOGTYPES, log["level"], ("awesomeblock", raw"[black]{2pt}{\faTerminal}{black}"))
                 println(io, raw"\begin{", logtype[1], "}", logtype[2])
                 print(io, raw"\ttfamily ")
-                msg = rstrip(log["msg"][1], '\n')
-                _inline_tolatex(io, replace(msg, '\n' => "\n\n"))
+                msg = String(rstrip(log["msg"][1], '\n'))
+                print(io, replace(msg, '\n' => "\n\n", ' ' => raw"\ ", '_' => raw"\_"))
                 for kwarg in log["kwargs"]
                     print(io, raw"\par ")
                     _inline_tolatex(io, kwarg[1])

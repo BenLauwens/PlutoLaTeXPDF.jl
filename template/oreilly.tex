@@ -53,6 +53,7 @@ pdfborderstyle={}, backref=false, colorlinks=false}
 \makeatother
 
 %chapterstyle
+\setcounter{secnumdepth}{\sectionnumdepth}
 \renewcommand*{\raggedchapter}{\raggedleft}
 \renewcommand*{\chapterformat}{%
 \mbox{\chapappifchapterprefix{\nobreakspace}\thechapter}}
@@ -93,6 +94,7 @@ pdfborderstyle={}, backref=false, colorlinks=false}
 \automark[section]{chapter}
 
 %toc
+\setcounter{tocdepth}{\sectiontocdepth}
 \KOMAoptions{chapterentrydots=true}
 \DeclareTOCStyleEntry[linefill=\hfill]{tocline}{section}
 \renewcommand*{\addparttocentry}[2]{%
