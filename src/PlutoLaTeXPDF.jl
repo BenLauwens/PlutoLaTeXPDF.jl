@@ -3,7 +3,6 @@ module PlutoLaTeXPDF
 using Markdown
 using Pluto: ServerSession, SessionActions, can_show_logs
 using Gumbo
-using AbstractTrees
 
 export tolatex, latextoPDF, toPDF
 
