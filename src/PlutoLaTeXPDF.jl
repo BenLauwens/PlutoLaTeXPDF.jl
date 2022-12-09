@@ -2,6 +2,8 @@ module PlutoLaTeXPDF
 
 using Markdown
 using Pluto: ServerSession, SessionActions, can_show_logs
+using Gumbo
+using AbstractTrees
 
 export tolatex, latextoPDF, toPDF
 
@@ -216,15 +218,26 @@ function _outputtolatex(io::IOBuffer, element::Tuple{Int64, Tuple})
     end
 end
 
+function _outputtolatex(io::IOBuffer, element::Tuple{Symbol, Tuple{String, MIME{Symbol("text/plain")}}})
+    field = element[1]
+    value = element[2][1]
+    print(io, field, " = ", value)
+end
+
 function _outputtolatex(io::IOBuffer, element::Tuple{Tuple{String, MIME{Symbol("text/plain")}}, Tuple{String, MIME{Symbol("text/plain")}}})
     key = element[1][1]
     value = element[2][1]
     print(io, key, " => ", value)
 end
 
+function _outputtolatex(io::IOBuffer, element::Tuple{Symbol, Tuple{Dict{Symbol, Any}, MIME{Symbol("application/vnd.pluto.tree+object")}}})
+    field = element[1]
+    print(io, field, " = ")
+    _outputtolatex(io, element[2][1])
+end
+
 function _outputtolatex(io::IOBuffer, element::Tuple{Tuple{String, MIME{Symbol("text/plain")}}, Tuple{Dict{Symbol, Any}, MIME{Symbol("application/vnd.pluto.tree+object")}}})
     key = element[1][1]
-    value = element[2][1]
     print(io, key, " => ")
     _outputtolatex(io, element[2][1])
 end
@@ -240,13 +253,17 @@ function _outputtolatex(io::IOBuffer, parent::Dict{Symbol, Any})
         _outputtolatex(io, parent[:elements])
         print(io, "]")
     elseif type == :Set
-        print(io, parent[:prefix], "[")
+        print(io, parent[:prefix], "()")
         _outputtolatex(io, parent[:elements])
-        print(io, "]")
+        print(io, ")")
     elseif type == :Dict
-        print(io, parent[:prefix], "[")
+        print(io, parent[:prefix], "(")
         _outputtolatex(io, parent[:elements])
-        print(io, "]")
+        print(io, ")")
+    elseif type == :struct
+        print(io, parent[:prefix], "(")
+        _outputtolatex(io, parent[:elements])
+        print(io, ")")
     elseif haskey(parent, :stacktrace)
         println(io, parent[:msg])
         _outputtolatex(io, parent[:stacktrace])
@@ -266,6 +283,72 @@ end
 
 function _outputtolatex(io::IOBuffer, unknown)
     dump(unknown)
+end
+
+function htmltolatex(io::IOBuffer, text::HTMLText)
+    _inline_tolatex(io, text.text)
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:p})
+    print(io, raw"\par ")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    println(io)
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:span})
+    print(io, raw"\par\textbf{")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    println(io, raw"}")
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:ul})
+    println(io, raw"\begin{itemize}")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    println(io, raw"\end{itemize}")
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:li})
+    print(io, raw"\item ")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    println(io)
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:b})
+    print(io, raw"\textbf{")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    print(io, raw"}")
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:code})
+    print(io, raw"\texttt{")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    print(io, raw"}")
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLElement{:em})
+    print(io, raw"\textit{")
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
+    print(io, raw"}")
+end
+
+function htmltolatex(io::IOBuffer, node::HTMLNode)
+    for elem in node.children
+        htmltolatex(io, elem)
+    end
 end
 
 const LOGTYPES = Dict{String, Tuple{String, String}}(
@@ -335,15 +418,26 @@ function _tolatex(file::String)
             println(io, raw"\end{minted}")
             println(io, raw"\color{black}")
         elseif output.mime == MIME("text/html")
-            if occursin("Version", output.body)
-                io_banner = IOBuffer()
-                Base.banner(io_banner)
-                banner = String(take!(io_banner))
-                println(io, raw"\begin{minted}[frame=single]{jlcon}")
-                println(io, banner * "julia>")
-                println(io, raw"\end{minted}")
+            if startswith(output.body, "<div class=\"markdown\">")
+                if occursin("Version", output.body) # ThinkJulia hack
+                    io_banner = IOBuffer()
+                    Base.banner(io_banner)
+                    banner = String(take!(io_banner))
+                    println(io, raw"\begin{minted}[frame=single]{jlcon}")
+                    println(io, banner * "julia>")
+                    println(io, raw"\end{minted}")
+                else
+                    html = parsehtml(output.body)
+                    println(io)
+                    print(io, raw"\par ")
+                    htmltolatex(io, html.root[2])
+                end
             else
-                dump(output)
+                html = parsehtml(output.body)
+                println(io)
+                print(io, raw"\par \ttfamily ")
+                htmltolatex(io, html.root[2])
+                println(io, raw"\rmfamily")
             end
         else
             dump(output)
@@ -359,7 +453,11 @@ function _tolatex(file::String)
                 println(io, raw"\begin{", logtype[1], "}", logtype[2])
                 print(io, raw"\ttfamily ")
                 msg = String(rstrip(log["msg"][1], '\n'))
-                print(io, replace(msg, '\n' => "\n\n", ' ' => raw"\ ", '_' => raw"\_"))
+                print(io, replace(msg, '\n' => "\n\n",
+                                       ' ' => raw"\ ",
+                                       '_' => raw"\_",
+                                       "\\\"" => "\"",
+                                       '\\' => raw"\textbackslash "))
                 for kwarg in log["kwargs"]
                     print(io, raw"\par ")
                     _inline_tolatex(io, kwarg[1])
