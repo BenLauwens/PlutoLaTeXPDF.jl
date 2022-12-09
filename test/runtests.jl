@@ -11,7 +11,7 @@ using Printf
     dir = joinpath(@__DIR__, "..", "example")
     file = joinpath(@__DIR__, "notebooks", "test_1.jl")
     file = joinpath(homedir(), "GitHub", "ES123", "Lectures", "Lecture18.jl")
-    toPDF(dir, file; author="Ben Lauwens")
+    #toPDF(dir, file; author="Ben Lauwens")
     files = String[]
     for i in 1:18
         file = @sprintf "Lecture%0.2u.jl" i

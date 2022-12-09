@@ -75,7 +75,7 @@ end
 
 function _tolatex(io::IOBuffer, arr::Vector)
     for (nr, element) in enumerate(arr)
-        if nr !=1 && element isa Markdown.Paragraph
+        if element isa Markdown.Paragraph#if nr !=1 && element isa Markdown.Paragraph
             print(io, raw"\par ")
         end
         _tolatex(io, element)
@@ -427,13 +427,13 @@ function _tolatex(file::String)
                     println(io, raw"\end{minted}")
                 else
                     html = parsehtml(output.body)
-                    println(io)
+                    #println(io)
                     print(io, raw"\par ")
                     htmltolatex(io, html.root[2])
                 end
             else
                 html = parsehtml(output.body)
-                println(io)
+                #println(io)
                 print(io, raw"\par \ttfamily ")
                 htmltolatex(io, html.root[2])
                 println(io, raw"\rmfamily")
