@@ -1,4 +1,4 @@
-\documentclass[12pt]{scrbook}
+\documentclass[12pt, LANGUAGE]{scrbook}
 
 %packages
 \usepackage{fontspec}
@@ -9,19 +9,42 @@
 \usepackage{awesomebox}
 \usepackage{minted}
 \usepackage{mathtools}
-\usepackage{polyglossia}
 \usepackage{graphicx}
 \usepackage{scrlayer-scrpage}
 \usepackage{newunicodechar}
 \usepackage{hyperref}
 \usepackage{needspace}
+\usepackage{amsthm}
+\usepackage{polyglossia}
+
+\setdefaultlanguage[babelshorthands=true]{LANGUAGE}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{stelling}[theorem]{Stelling}
+
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{definitions}[definition]{Definitions}
+\newtheorem{definitie}[definition]{Definitie}
+\newtheorem{definities}[definition]{Definities}
+
+\newtheorem{axiom}{Axiom}[chapter]
+\newtheorem{axioms}[axiom]{Axioms}
+\newtheorem{axioma}[axiom]{Axioma}
+\newtheorem{axiomas}[axiom]{Axioma's}
+
+\newtheorem{example}{Example}[chapter]
+\newtheorem{examples}[example]{Examples}
+\newtheorem{voorbeeld}[example]{Voorbeeld}
+\newtheorem{voorbeelden}[example]{Voorbeelden}
 
 %configs
 \geometry{verbose, vscale=0.8, hscale=0.75, footskip=1cm}
 \svgsetup{inkscapeexe=/usr/local/bin/inkscape, inkscape=force, inkscapelatex=false}
 \setminted{samepage=true, breaklines=true, fontsize=\small}
 \mathtoolsset{showonlyrefs}
-\setdefaultlanguage[variant=american]{english}
 \setlength{\parskip}{\smallskipamount}
 \setlength{\parindent}{0pt}
 \hypersetup{pdftitle={TITLE}, pdfauthor={AUTHOR}, unicode=true, bookmarks=true, 
@@ -50,6 +73,8 @@ pdfborderstyle={}, backref=false, colorlinks=false}
 \newunicodechar{♥}{\mbox{\ttfamily♥}}
 \newunicodechar{♦}{\mbox{\ttfamily♦}}
 \newunicodechar{♣}{\mbox{\ttfamily♣}}
+\newunicodechar{⟼}{\mbox{\ttfamily⟼}}
+\newunicodechar{ℚ}{\mbox{$\mathbb Q$}}
 \newunicodechar{⟼}{\mbox{\ttfamily⟼}}
 
 %ligatures

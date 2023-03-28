@@ -169,10 +169,16 @@ const ADMONITIONTYPES = Dict{String, Tuple{String, String}}(
 )
 
 function _tolatex(io::IOBuffer, admonition::Markdown.Admonition)
-    admonitiontype = get(ADMONITIONTYPES, admonition.category, ("awesomeblock", raw"[black]{2pt}{\faLaptop}{black}"))
-    println(io, raw"\begin{", admonitiontype[1], "}", admonitiontype[2])
-    _tolatex(io, admonition.content)
-    println(io, raw"\end{", admonitiontype[1], "}")
+    if admonition.category ∈ keys(ADMONITIONTYPES)
+        admonitiontype = get(ADMONITIONTYPES, admonition.category, ("awesomeblock", raw"[black]{2pt}{\faLaptop}{black}"))
+        println(io, raw"\begin{", admonitiontype[1], "}", admonitiontype[2])
+        _tolatex(io, admonition.content)
+        println(io, raw"\end{", admonitiontype[1], "}")
+    else
+        println(io, raw"\begin{", admonition.category, "}")
+        _tolatex(io, admonition.content)
+        println(io, raw"\end{", admonition.category, "}")
+    end
 end
 
 const LISTTYPES = Dict{Int64, String}(
@@ -514,7 +520,8 @@ end
 function toPDF(path::String, files::Vector{String};
                title::String="",
                author::String="",
-               template::String=joinpath(@__DIR__, "..", "template", "book.tex"))
+               template::String=joinpath(@__DIR__, "..", "template", "book.tex"),
+               language::String="english")
     dir = dirname(path)
     if isdir(dir) cd(dir) else error("Directory does not exist!") end
     cd(dir)
@@ -526,7 +533,8 @@ function toPDF(path::String, files::Vector{String};
         content = _tolatex(file)
         write(joinpath(dir, name * ".tex"), content)
     end
-    document = replace(read(template, String), "TITLE" => title,
+    document = replace(read(template, String), "LANGUAGE" => language,
+                                               "TITLE" => title,
                                                "AUTHOR" => author,
                                                "CONTENT" => String(take!(io)))
     name, _ = splitext(basename(path))
