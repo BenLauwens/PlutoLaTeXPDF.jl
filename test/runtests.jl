@@ -26,8 +26,8 @@ using Printf
     =#
     =#
     files = String[]
-    for i in 1:2
-        file = @sprintf "Lecture%0.2u.jl" i
+    for i in 1:1
+        file = @sprintf "Chapter%0.2u.jl" i
         push!(files, joinpath(homedir(), "Nextcloud", "Cursus", "Analyse", "Notes", file))
     end
     toPDF(joinpath(@__DIR__, "..", "example", "analyse.pdf"), files;

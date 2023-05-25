@@ -15,30 +15,50 @@
 \usepackage{hyperref}
 \usepackage{needspace}
 \usepackage{amsthm}
+\usepackage{mdframed}
 \usepackage{polyglossia}
 
 \setdefaultlanguage[babelshorthands=true]{LANGUAGE}
 
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{stelling}[theorem]{Stelling}
+\AtBeginEnvironment{proof}{\small}
 
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{definitions}[definition]{Definitions}
-\newtheorem{definitie}[definition]{Definitie}
-\newtheorem{definities}[definition]{Definities}
+\newmdtheoremenv[innertopmargin=0pt]{theorem}{Theorem}[chapter]
+\newmdtheoremenv[innertopmargin=0pt]{lemma}[theorem]{Lemma}
+\newmdtheoremenv[innertopmargin=0pt]{proposition}[theorem]{Proposition}
+\newmdtheoremenv[innertopmargin=0pt]{corollary}[theorem]{Corollary}
+\newmdtheoremenv[innertopmargin=0pt]{stelling}[theorem]{Stelling}
 
-\newtheorem{axiom}{Axiom}[chapter]
-\newtheorem{axioms}[axiom]{Axioms}
-\newtheorem{axioma}[axiom]{Axioma}
-\newtheorem{axiomas}[axiom]{Axioma's}
+\theoremstyle{definition}
+\newmdtheoremenv[innertopmargin=0pt]{definition}{Definition}[chapter]
+\newmdtheoremenv[innertopmargin=0pt]{definitions}[definition]{Definitions}
+\newmdtheoremenv[innertopmargin=0pt]{definitie}[definition]{Definitie}
+\newmdtheoremenv[innertopmargin=0pt]{definities}[definition]{Definities}
 
+\newmdtheoremenv[innertopmargin=0pt]{axiom}{Axiom}[chapter]
+\newmdtheoremenv[innertopmargin=0pt]{axioms}[axiom]{Axioms}
+\newmdtheoremenv[innertopmargin=0pt]{axioma}[axiom]{Axioma}
+\newmdtheoremenv[innertopmargin=0pt]{axiomas}[axiom]{Axioma's}
+
+\newtheoremstyle{small}% name
+  {}%      Space above, empty = `usual value'
+  {}%      Space below
+  {\small}% Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\itshape}% Thm head font
+  {}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}% Thm head spec
+\theoremstyle{small}
 \newtheorem{example}{Example}[chapter]
 \newtheorem{examples}[example]{Examples}
 \newtheorem{voorbeeld}[example]{Voorbeeld}
 \newtheorem{voorbeelden}[example]{Voorbeelden}
+
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem{exercises}[exercise]{Exercises}
+\newtheorem{oefening}[exercise]{Oefening}
+\newtheorem{oefeningen}[exercise]{Oefeningen}
 
 %configs
 \geometry{verbose, vscale=0.8, hscale=0.75, footskip=1cm}

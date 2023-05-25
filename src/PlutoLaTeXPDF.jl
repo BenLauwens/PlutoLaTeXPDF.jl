@@ -75,7 +75,7 @@ end
 
 function _tolatex(io::IOBuffer, arr::Vector)
     for (nr, element) in enumerate(arr)
-        if element isa Markdown.Paragraph#if nr !=1 && element isa Markdown.Paragraph
+        if nr !=1 && element isa Markdown.Paragraph
             print(io, raw"\par ")
         end
         _tolatex(io, element)
@@ -175,6 +175,7 @@ function _tolatex(io::IOBuffer, admonition::Markdown.Admonition)
         _tolatex(io, admonition.content)
         println(io, raw"\end{", admonitiontype[1], "}")
     else
+        admonition.category = admonition.category in ("bewijs", "démonstration") ? "proof" : admonition.category
         println(io, raw"\begin{", admonition.category, "}")
         _tolatex(io, admonition.content)
         println(io, raw"\end{", admonition.category, "}")
