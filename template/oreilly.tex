@@ -15,7 +15,7 @@
 \usepackage{hyperref}
 \usepackage{needspace}
 \usepackage{amsthm}
-\usepackage{mdframed}
+\usepackage[framemethod=tikz]{mdframed}
 \usepackage{polyglossia}
 \usepackage{csquotes}
 
@@ -27,19 +27,50 @@
 
 \theoremstyle{plain}
 
-\newmdtheoremenv[innertopmargin=0pt]{theorem}{Theorem}[chapter]
-\newmdtheoremenv[innertopmargin=0pt]{lemma}[theorem]{Lemma}
-\newmdtheoremenv[innertopmargin=0pt]{proposition}[theorem]{Proposition}
-\newmdtheoremenv[innertopmargin=0pt]{corollary}[theorem]{Corollary}
-\newmdtheoremenv[innertopmargin=0pt]{stelling}[theorem]{Stelling}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=cyan!80,
+backgroundcolor=cyan!10]{theorem}{Theorem}[chapter]
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=cyan!80,
+backgroundcolor=cyan!10]{lemma}[theorem]{Lemma}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=cyan!80,
+backgroundcolor=cyan!10]{corollary}[theorem]{Corollary}
 
 \theoremstyle{definition}
 
-\newmdtheoremenv[innertopmargin=0pt]{definition}{Definition}[chapter]
-\newmdtheoremenv[innertopmargin=0pt]{definitie}[definition]{Definitie}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=teal!80,
+backgroundcolor=teal!10]{definition}{Definition}[chapter]
 
-\newmdtheoremenv[innertopmargin=0pt]{axiom}{Axiom}[chapter]
-\newmdtheoremenv[innertopmargin=0pt]{axioma}[axiom]{Axioma}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=purple!80,
+backgroundcolor=purple!10]{axiom}{Axiom}[chapter]
 
 
 \newtheoremstyle{small}% name
@@ -55,11 +86,32 @@
 
 \theoremstyle{small}
 
-\newtheorem{example}{Example}[chapter]
-\newtheorem{voorbeeld}[example]{Voorbeeld}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=brown!80,
+backgroundcolor=brown!10]{example}{Example}[chapter]
 
-\newtheorem{exercise}{Exercise}[chapter]
-\newtheorem{oefening}[exercise]{Oefening}
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=yellow!80,
+backgroundcolor=yellow!10]{exercise}{Exercise}[chapter]
+
+\newmdtheoremenv[hidealllines=true,
+leftline=true,
+linewidth=6pt,
+innerleftmargin=10pt,
+innerrightmargin=10pt,
+innertopmargin=0pt,
+linecolor=violet!80,
+backgroundcolor=violet!10]{template}{Template}[chapter]
 
 %configs
 \geometry{verbose, vscale=0.8, hscale=0.75, footskip=1cm}
