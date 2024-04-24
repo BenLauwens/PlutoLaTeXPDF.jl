@@ -144,12 +144,13 @@ function _tolatex(io::IOBuffer, table::Markdown.Table)
     println(io, raw"\hline")
     for (nr_row, columns) in enumerate(rows)
         len_col = length(columns)
+        if nr_row == 2 println(io, raw"\hline") end
         for (nr_col, cell) in enumerate(columns)
             _inline_tolatex(io, cell)
-            if nr_col == len_col && nr_row != len_row
-                print(io, " \\\\")
-            else
+            if nr_col != len_col
                 print(io, " & ")
+            else
+                print(io, " \\\\")
             end
         end
         println(io)
@@ -177,6 +178,7 @@ function _tolatex(io::IOBuffer, admonition::Markdown.Admonition)
     else
         admonition.category = admonition.category in ("bewijs", "démonstration") ? "proof" : admonition.category
         println(io, raw"\begin{", admonition.category, "}")
+        if admonition.title != uppercasefirst(admonition.category) _inline_tolatex(io, admonition.title) end
         _tolatex(io, admonition.content)
         println(io, raw"\end{", admonition.category, "}")
     end

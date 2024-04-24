@@ -27,12 +27,12 @@ using Printf
     =#
     files = String[]
     for i in 1:1
-        file = @sprintf "Chapter%0.2u.jl" i
-        push!(files, joinpath(homedir(), "Nextcloud", "Cursus", "Analyse", "Notes", file))
+        file = @sprintf "Lecture%0.2u" i
+        push!(files, joinpath(homedir(), "Documents", "Github", "ES111", "Lectures", file * ".jl"))
     end
-    toPDF(joinpath(@__DIR__, "..", "example", "analyse.pdf"), files;
-               title="Inleiding tot de analyse, differentiaal- en integraalrekening",
+    toPDF(joinpath(homedir(), "Documents", "Github", "ES111", "Calculus.pdf"), files;
+               title="Calculus",
                author="Ben Lauwens",
                template=joinpath(@__DIR__, "..", "template", "oreilly.tex"),
-               language="dutch")
+               language="english")
 end
