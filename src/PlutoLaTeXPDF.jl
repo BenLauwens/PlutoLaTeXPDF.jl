@@ -176,9 +176,16 @@ function _tolatex(io::IOBuffer, admonition::Markdown.Admonition)
         _tolatex(io, admonition.content)
         println(io, raw"\end{", admonitiontype[1], "}")
     else
-        admonition.category = admonition.category in ("bewijs", "démonstration") ? "proof" : admonition.category
-        println(io, raw"\begin{", admonition.category, "}")
-        if admonition.title != uppercasefirst(admonition.category) _inline_tolatex(io, admonition.title) end
+        print(io, raw"\begin{", admonition.category, "}")
+        if admonition.title != uppercasefirst(admonition.category)
+            print(io, "[", split(admonition.title, uppercasefirst(admonition.category) * " of ")[end], "]")
+            if uppercasefirst(admonition.category) == "Template"
+                print(io, raw"\mbox{}")
+                println(io, raw"\par")
+            else
+                println(io)
+            end
+        end
         _tolatex(io, admonition.content)
         println(io, raw"\end{", admonition.category, "}")
     end

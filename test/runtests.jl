@@ -26,7 +26,7 @@ using Printf
     =#
     =#
     files = String[]
-    for i in 1:1
+    for i in 1:2
         file = @sprintf "Lecture%0.2u" i
         push!(files, joinpath(homedir(), "Documents", "Github", "ES111", "Lectures", file * ".jl"))
     end

@@ -18,10 +18,13 @@
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{polyglossia}
 \usepackage{csquotes}
+\usepackage{microtype}
 
 \MakeOuterQuote{"}
 
 \setdefaultlanguage{LANGUAGE}
+
+\hyphenation{cor-res-pon-den-ce}
 
 \AtBeginEnvironment{proof}{\small}
 
@@ -32,7 +35,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=cyan!80,
 backgroundcolor=cyan!10]{theorem}{Theorem}[chapter]
 \newmdtheoremenv[hidealllines=true,
@@ -40,7 +43,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=cyan!80,
 backgroundcolor=cyan!10]{lemma}[theorem]{Lemma}
 \newmdtheoremenv[hidealllines=true,
@@ -48,7 +51,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=cyan!80,
 backgroundcolor=cyan!10]{corollary}[theorem]{Corollary}
 
@@ -59,7 +62,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=teal!80,
 backgroundcolor=teal!10]{definition}{Definition}[chapter]
 
@@ -68,7 +71,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=purple!80,
 backgroundcolor=purple!10]{axiom}{Axiom}[chapter]
 
@@ -91,16 +94,16 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
-linecolor=brown!80,
-backgroundcolor=brown!10]{example}{Example}[chapter]
+innertopmargin=-3pt,
+linecolor=orange!80,
+backgroundcolor=orange!10]{example}{Example}[chapter]
 
 \newmdtheoremenv[hidealllines=true,
 leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=yellow!80,
 backgroundcolor=yellow!10]{exercise}{Exercise}[chapter]
 
@@ -109,7 +112,7 @@ leftline=true,
 linewidth=6pt,
 innerleftmargin=10pt,
 innerrightmargin=10pt,
-innertopmargin=0pt,
+innertopmargin=-3pt,
 linecolor=violet!80,
 backgroundcolor=violet!10]{template}{Template}[chapter]
 
